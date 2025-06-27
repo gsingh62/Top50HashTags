@@ -1,4 +1,7 @@
 # Top50HashTags
-Find the top 50 most popular hash tags in the last two days.
 
-We calculate every 5 minutes the number of posts using that tag.
+A flink job that finds the top 50 hash tags in twitter posts over last 2 days only.
+There could be billions of posts in the last 2 days and they're all coming in realtime - a 5 minute delay in results
+is allowed.
+Example input from tweet database ->
+{"text": "I love #Flink and #Streaming", "timestamp": 1729968800000}

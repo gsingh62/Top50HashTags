@@ -16,7 +16,14 @@ import org.apache.flink.util.Collector;
 import org.apache.flink.streaming.api.windowing.time.Time;
 import java.util.Date;
 
-// Example post: This is the best day of my life #BestDayOfMyLife
+/**
+ * A flink job that finds the top 50 hash tags in twitter posts over last 2 days only.
+ * There could be billions of posts in the last 2 days and they're all coming in realtime - a 5 minute delay in results
+ * is allowed.
+ * Example input from tweet database ->
+ * {"text": "I love #Flink and #Streaming", "timestamp": 1729968800000}
+ */
+
 public class Top50HashTags {
     public static void main(String[] args) throws Exception {
         StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
@@ -61,7 +68,7 @@ public class Top50HashTags {
         env.execute("Window WordCount");
     }
 
-    public PostRecord parseLine(String line) {
+    public static PostRecord parseLine(String line) {
         int firstComma = line.indexOf(',');
 
         long eventTime = Long.parseLong(line.substring(0, firstComma));
@@ -78,7 +85,7 @@ public class Top50HashTags {
         }
     }
 
-    public class PostRecord {
+    public static class PostRecord {
         String post;
         long eventTime;
 
